@@ -12,9 +12,9 @@ This project is structured into three main phases:
 
 ### Phase 1: The Fundamentals (Root Directory)
 I started by writing standalone scripts and notebooks to understand the foundational concepts:
-*   `1-Basic_Scrapping.py`: Introduction to HTTP requests and static HTML parsing using `BeautifulSoup`.
-*   `2-Dynamic_Sites_Scrapping_Selenium.py`: Moving to dynamic DOMs with `Selenium` to handle JavaScript-heavy sites.
-*   `3-Dynamic_Scrapping_Playwright.py`: Upgrading from Selenium to `Playwright` for faster, modern, asynchronous browser automation.
+*   `1-Basic_Scraping.py`: Introduction to HTTP requests and static HTML parsing using `BeautifulSoup`.
+*   `2-Dynamic_Sites_Scraping_Selenium.py`: Moving to dynamic DOMs with `Selenium` to handle JavaScript-heavy sites.
+*   `3-Dynamic_Scraping_Playwright.py`: Upgrading from Selenium to `Playwright` for faster, modern, asynchronous browser automation.
 *   `4-Playwrigth_MCP_workflow.md`: Notes on using Playwright in complex automated agent workflows.
 *   `5-Data_Proccesing.ipynb`: A Jupyter Notebook dedicated to data cleaning, type coercion, and transitioning untidy scraped data into structured Pandas DataFrames.
 *   `6-Other_Info+Interview.md`: Miscellaneous notes and interview prep related to web scraping.
