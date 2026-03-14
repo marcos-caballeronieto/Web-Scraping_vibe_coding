@@ -59,8 +59,8 @@ To test the advanced toolkit, I built three distinct adaptations targeting highl
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/marcos-caballero/Web-Scrapping_vibe_coding.git
-    cd Web-Scrapping_vibe_coding
+    git clone https://github.com/marcos-caballero/Web-Scraping_vibe_coding.git
+    cd Web-Scraping_vibe_coding
     ```
 
 2.  **Install Dependencies:**
