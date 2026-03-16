@@ -45,15 +45,20 @@ To test the advanced toolkit, I built three distinct adaptations targeting highl
     *   *Solution:* Discovered and utilized Reddit's native JSON endpoint implementation (`.json` appended to the URL) to easily extract tens of thousands of `post_title`, `upvotes`, and `comments` using simple Python `requests`, completely bypassing front-end WAFs.
 
 3.  **Indeed Anti-Bot Analysis (`/indeed_scraper`)**
-    *   *Challenge:* Indeed uses Cloudflare Turnstile and Datadome, heavily penalizing bot IP reputations.
-    *   *Solution/Result:* I progressively implemented Playwright (headless), Playwright (headful), and `undetected-chromedriver`. While the logic is perfectly implemented, this case study proved that open-source stealth drivers alone are insufficient against top-tier edge protections without the addition of premium Residential Proxies (detailed in `indeed_scraping_report.md`).
+    * *Challenge:* Indeed employs a multi-layered security approach, primarily using Cloudflare Turnstile and DataDome to heavily penalize bot IP reputations and monitor for automated behavior.
+    * *Solution/Result:* Initial attempts using open-source stealth drivers (`playwright-stealth` and `undetected-chromedriver`) were successfully blocked by the WAF. To overcome this:
+        * **Behavioral Evasion:** Specifically in order to not be blocked by Turnstile's behavioral analysis, I implemented mathematically generated **Bezier curves** (`numpy` and `scipy`) via `ActionChains` to simulate erratic, human-like mouse movements. 
+        * **IP Reputation:** I utilized **mobile proxy tethering** (4G/5G) to leverage high-reputation CGNAT IP addresses, bypassing the strict IP bans.
+        * **Dynamic DOM Parsing:** Once past the security wall, I utilized my **Playwright MCP** workflow to inspect the rendered page and discover Indeed's newly updated CSS containers (identifying `#mosaic-provider-jobcards` instead of the legacy lists). 
+    * **Final Outcome:** This combined approach successfully bypassed the protections and reliably extracted the target job data into a structured CSV.
 
 ## 🛠️ Technology Stack
-*   **Languages:** Python 3.11
-*   **Web Automation:** `playwright`, `playwright-stealth`, `selenium`, `undetected-chromedriver`
-*   **Parsing:** `beautifulsoup4`, `json`, `pydantic`
-*   **Data Processing:** `pandas`, `jupyter`
-*   **Network:** `requests`, Standard proxy implementation
+* **Languages:** Python 3.11
+* **Web Automation:** `playwright`, `playwright-stealth`, `selenium`, `undetected-chromedriver`, Playwright MCP
+* **Behavioral Emulation:** `numpy`, `scipy` (used to generate Bezier curves for human-like mouse movements)
+* **Parsing:** `beautifulsoup4`, `json`, `pydantic`
+* **Data Processing:** `pandas`, `jupyter`
+* **Network:** `requests`, Standard proxy implementation, Mobile proxy tethering (4G/5G for high-reputation CGNAT IPs)
 
 ## 🚀 Getting Started
 

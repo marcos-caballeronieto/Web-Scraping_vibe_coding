@@ -34,6 +34,14 @@ As a final sophisticated attempt, we rewrote the scraper using `undetected-chrom
 After `undetected-chromedriver` alone failed, we hypothesized the blocker was JavaScript behavioral analysis. We implemented `ActionChains` combined with a mathematically generated **Bezier curve** function (`numpy` and `scipy`) to simulate realistic, erratic human mouse movements on the page before attempting to parse the DOM.
 *   **Result:** **SUCCESS.** The simulated human curves successfully bypassed the behavioral analysis of Cloudflare Turnstile. Our debug screenshot revealed no CAPTCHA was present; rather, Indeed had silently updated their DOM structure.
 
+### 6. Tethering Strategy for IP Reputation Issues
+In this project, tethering is treated as a practical fallback when a home/office ISP IP gets repeatedly challenged by Cloudflare/DataDome.
+
+*   **Why it can help:** Mobile networks (4G/5G) usually sit behind CGNAT and large carrier IP pools, which may have better short-term trust scores than a flagged static residential IP.
+*   **How to apply it:** Run the scraper through phone hotspot or USB tethering, and only rotate sessions if blocks appear again.
+*   **Scraping profile while tethered:** Keep low concurrency, add realistic delays, and preserve human-like browser behavior (headful mode + mouse curves) to avoid burst signatures.
+*   **Limits:** Tethering is unstable for scale (data caps, changing latency, shared IP noise), so it is best for debugging and controlled batch jobs rather than continuous production crawling. Professional proxies may be needed to scale the architecture.
+
 ## Successful Data Extraction
 By bypassing the Turnstile protection suite, we were able to review the rendered page and discover that Indeed had changed its CSS layout. 
 *   The old container `ul.jobsearch-ResultsList` no longer exists.
@@ -46,6 +54,3 @@ We successfully updated the CSS selectors in our `indeed_scraper.py` script. The
 ## Conclusion and Next Steps
 The advanced scraping logic is now fully functional and capable of bypassing Indeed's Cloudflare Turnstile purely through human-like behavioral simulation (without a paid CAPTCHA solver) on the current developer IP. 
 
-For future large-scale production deployments, if IP reputation becomes an issue:
-1.  **Mobile Proxy Tethering:** Use mobile 4G/5G connections, which leverage CGNAT and have incredibly high IP reputation.
-2.  **Commercial Solving Services:** Integrate a Turnstile solving service (like CapSolver) as a final fallback if the mouse curves eventually trigger a hard CAPTCHA block.
