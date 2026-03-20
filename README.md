@@ -43,6 +43,29 @@ To demonstrate the framework's capability against modern web security, the `/adv
 
 ## 🏗️ Architecture & Usage
 
+### Arquitecture scheme
+```mermaid
+graph TD
+    A[Target Website] -->|Network Interception / Navigation| B(Playwright / Requests)
+    B --> C{Source Analysis}
+    
+    C -->|Hidden Metadata| D[JSON-LD / API Extraction]
+    C -->|Complex / Messy DOM| E[Raw Text Extraction]
+    
+    E --> F[OpenAI LLM Engine]
+    F -->|Strict Validation| G{Pydantic Schema}
+    
+    D --> H[Data Transformation]
+    G -->|Formatted JSON| H
+    
+    H --> I(Pandas DataFrame)
+    I -->|Clean Export| J[(CSV File / Database)]
+    
+    classDef default fill:#0f172a,stroke:#3b82f6,stroke-width:2px,color:#fff;
+    classDef llm fill:#064e3b,stroke:#10b981,stroke-width:2px,color:#fff;
+    class F,G llm;
+```
+
 ### The Fundamentals (`/Root`)
 Contains standalone modules for basic data extraction and processing:
 * `1-Basic_Scraping.py` / `2-Dynamic_Sites_Scraping_Selenium.py`: Base HTTP requests and DOM manipulation.
